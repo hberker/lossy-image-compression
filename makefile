@@ -11,6 +11,6 @@ main.o: $(EXEC)
 	$(CC) -o $(TARGET) $(TARGET).o $(RUN_FLAGS)
 
 run: main.o
-	./$(TARGET)
+	./$(TARGET) 2
 	-rm $(TARGET)
 	-rm $(TARGET).o
