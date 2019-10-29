@@ -3,7 +3,7 @@
 using namespace png;
 using namespace std;
 
-int vertical_cut(image<rgb_pixel> &img)
+int reduce_image(image<rgb_pixel> &img)
 {
     vector<rgb_pixel> pixels = {};
     int index=0;
@@ -43,7 +43,8 @@ int main(int argc, char *argv[])
     image<rgb_pixel> image("mouse.png");
     for(int i = 0; i < compression_number; i++)
     {
-        vertical_cut(image);
+        reduce_image(image);
     }
-    image.write("new.png");
+    image.write("output.png");
+    return 0;
 }
