@@ -1,15 +1,49 @@
 #include "png++/png.hpp"
+#include<vector>
 using namespace png;
+using namespace std;
 
-int main()
+int vertical_cut(image<rgb_pixel> &img)
 {
-    image<rgb_pixel > image(128, 128);
-    for (size_t y = 0; y < image.get_height(); ++y)
+    vector<rgb_pixel> pixels = {};
+    int index=0;
+    for (size_t r = 0; r < img.get_width(); ++r)
     {
-    for (size_t x = 0; x < image.get_width(); ++x)
+        for (size_t c = 0; c < img.get_height(); ++c)
+        {
+            if (c % 2==0)
+            {
+                pixels.insert(pixels.end(),img[c][r]);
+            }
+        }
+    }
+    for (size_t r = 0; r < img.get_width(); ++r)
     {
-        image[y][x] = rgb_pixel(x, y, x + y);
+        for (size_t c = 0; c < img.get_height(); ++c)
+        {
+            if (c % 2 !=0 )
+            {
+                pixels.insert(pixels.end(),img[c][r]);
+            }
+        }
     }
+    for (size_t r = 0; r < img.get_width(); ++r)
+    {
+        for (size_t c = 0; c <img.get_height(); ++c)
+        {
+            img[c][r] = pixels.at(index);
+            index++;
+        }
     }
-    image.write("rgb.png");
+    return 0;
+}
+int main(int argc, char *argv[])
+{
+    unsigned int compression_number = atoi(argv[1]);
+    image<rgb_pixel> image("mouse.png");
+    for(int i = 0; i < compression_number; i++)
+    {
+        vertical_cut(image);
+    }
+    image.write("new.png");
 }
