@@ -1,5 +1,6 @@
 #include "png++/png.hpp"
-#include<vector>
+#include <vector>
+#include <ctime>
 using namespace png;
 using namespace std;
 
@@ -41,10 +42,13 @@ int main(int argc, char *argv[])
 {
     unsigned int compression_number = atoi(argv[1]);
     image<rgb_pixel> image("mouse.png");
+    clock_t start = clock();
     for(int i = 0; i < compression_number; i++)
     {
         reduce_image(image);
     }
     image.write("output.png");
+    clock_t time = clock() - start;
+    cout << "Took: " << (float)time/CLOCKS_PER_SEC << " seconds"<< endl;
     return 0;
 }
